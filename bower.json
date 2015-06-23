@@ -1,0 +1,20 @@
+{
+    "name": "web-bower",
+    "main": "index.js",
+    "version": "0.0.0",
+    "homepage": "",
+    "authors": [
+        "Brian Bland"
+],
+    "license": "MIT",
+    "ignore": [
+    "**/.*",
+    "node_modules",
+    "lib/bower_components",
+    "test",
+    "tests"
+],
+    "dependencies": {
+        "skeleton": "~2.0.4"
+    }
+}
