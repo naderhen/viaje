@@ -1,6 +1,4 @@
-Abandoned because I cannot use react-router transitions.
-
-# Turtle
+# exp-hapi-redux
 
 Prerequisites:
 - Node installation (< v0.12.x)
