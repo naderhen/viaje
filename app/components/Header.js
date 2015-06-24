@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'redux/react';
 
+if (process.env.BROWSER) {
+    require('./../styles/Header.scss');
+}
 export default class Header extends React.Component {
     static propTypes = {
         title: PropTypes.string.isRequired
@@ -13,7 +16,9 @@ export default class Header extends React.Component {
     render() {
         document.title = this.props.title;
         return (
-            <h5>HEADER</h5>
+            <div className='header'>
+                <h5>Experimental React+Redux Implementation</h5>
+            </div>
         );
     }
 }

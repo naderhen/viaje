@@ -1,0 +1,13 @@
+@import 'Constants';
+
+body {
+  font-family: $default-font-family;
+}
+
+label {
+  font-size: 1em;
+}
+
+input {
+  margin: 0.5rem;
+}

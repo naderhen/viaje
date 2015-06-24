@@ -1,0 +1,28 @@
+@import 'Main';
+
+nav {
+  font-size: 1.1em;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li { display: inline-block; }
+
+  a {
+    color: $default-primary-color;
+    font-weight: bold;
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: $default-secondary-color;
+    font-weight: bold;
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+  }
+}

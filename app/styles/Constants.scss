@@ -1,0 +1,14 @@
+@import 'Imports';
+
+$default-font-family: 'Quattrocento Sans', sans-serif;
+
+$default-primary-color: rgb(0, 155, 6);
+$default-secondary-color: rgb(40, 141, 155);
+
+.primary-color {
+  color:$default-primary-color;
+}
+
+.secondary-color {
+  color:$default-secondary-color;
+}
