@@ -1,12 +1,12 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router'
 
 if (process.env.BROWSER) {
-    require('./../styles/Navigation.scss');
+    require('./../styles/Navigation.scss')
 }
 export default class Navigation extends React.Component {
-    constructor(props, state){
-        super(props, state);
+    constructor(props, state) {
+        super(props, state)
     }
 
     render() {
@@ -18,6 +18,6 @@ export default class Navigation extends React.Component {
                     <li><Link to='/page2'>Page 2</Link></li>
                 </ul>
             </nav>
-        );
+        )
     }
 }

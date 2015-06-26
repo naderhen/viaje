@@ -1,1 +1,1 @@
-export { default as HtmlHeaderStore } from './HtmlHeaderStore';
+export { default as HtmlHeaderStore } from './HtmlHeaderStore'

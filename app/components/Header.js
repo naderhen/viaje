@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react'
 
 if (process.env.BROWSER) {
-    require('./../styles/Header.scss');
+    require('./../styles/Header.scss')
 }
 export default class Header extends React.Component {
-    constructor(props, state){
-        super(props, state);
+    constructor(props, state) {
+        super(props, state)
     }
 
     render() {
@@ -13,6 +13,6 @@ export default class Header extends React.Component {
             <div className='header'>
                 <h5>Experimental React+Redux Implementation</h5>
             </div>
-        );
+        )
     }
 }

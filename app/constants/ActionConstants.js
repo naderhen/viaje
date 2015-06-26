@@ -1,1 +1,1 @@
-export const UPDATE_TITLE = 'UPDATE_TITLE';   // (title: string)
+export const UPDATE_TITLE = 'UPDATE_TITLE'   // (title: string)

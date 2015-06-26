@@ -3,7 +3,7 @@ export default function thunkMiddleware(getState) {
         const recurse = action =>
             typeof action === 'function' ?
                 action(recurse, getState) :
-                next(action);
-        return recurse;
-    };
+                next(action)
+        return recurse
+    }
 }

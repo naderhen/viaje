@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'redux/react';
+import React, { PropTypes } from 'react'
+import { connect } from 'redux/react'
 
 if (process.env.BROWSER) {
-    require('./../styles/Login.scss');
+    require('./../styles/Login.scss')
 }
 export default class Login extends React.Component {
     static propTypes = {
@@ -10,18 +10,11 @@ export default class Login extends React.Component {
     };
 
     constructor(props, state){
-        super(props, state);
+        super(props, state)
     }
 
     login(e) {
-        e.preventDefault();
-
-        // TODO: Improve validation, highlight controls + messages?
-        if (this.state.user.length === 0 || this.state.password.length === 0) {
-            return;
-        }
-
-        console.log('auth', this.state.user, this.state.password);
+        e.preventDefault()
     }
 
     render() {
@@ -42,6 +35,6 @@ export default class Login extends React.Component {
                     </form>
                 </div>
             </div>
-        );
+        )
     }
 }
