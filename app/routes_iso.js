@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: 0 */
 import React from 'react';
 import {Router, Route, Redirect} from 'react-router';
-import {Application, Home, Page1, Page2} from './components';
+import {Application2, Application, Home, Page1, Page2} from './components';
 
 export default (
     <Route component={Application}>

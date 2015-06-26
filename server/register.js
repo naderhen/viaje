@@ -11,8 +11,8 @@ function register(server, options, next){
     // TODO Export this into separate plugin when mature
     server.ext('onPostHandler', middleware(
         {
-            //application: require('./../app/Root'),
-            routes: require('./../app/routes'),
+            application: require('./../app/App'),
+            routes: require('./../app/routes_iso'),
             statsFile: './../app/webpack-stats.json'
         }
     ));

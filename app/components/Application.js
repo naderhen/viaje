@@ -1,15 +1,13 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'redux/react';
-import { bindActionCreators } from 'redux';
 import Header from './Header';
 import Navigation from './Navigation';
-import * as HtmlActions from './../actions/HtmlHeaderActions';
+import Home from './Home';
+import { connect } from 'redux/react';
 
 @connect(state => ({
     title: state.HtmlHeaderStore.title
 }))
 export default class Application extends React.Component {
-
     static propTypes = {
         children: PropTypes.any,
         dispatch: PropTypes.func.isRequired
@@ -20,15 +18,18 @@ export default class Application extends React.Component {
     }
 
     render() {
-        const { title, dispatch } = this.props;
+        const { dispatch } = this.props;
         return (
             <div>
-                <Header title={title} />
+                <Header />
                 <Navigation />
+                {/* dispatch makes it to the component, but fails server-side with 'document is not defined'  */}
+                {/*<Home {...dispatch} /> */}
+                {/* dispatch doesn't make it down server-side (undefined) */}
                 {/* this will render the child routes */}
-                { this.props.children &&
-                    React.cloneElement(this.props.children, {dispatch})
-                }
+                {this.props.children &&
+                    React.cloneElement(this.props.children, {dispatch})}
+
             </div>
         );
     }

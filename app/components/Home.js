@@ -1,19 +1,25 @@
 import React, { PropTypes } from 'react';
 import * as HtmlActions from './../actions/HtmlHeaderActions';
+import {connect} from 'redux/react';
 
+@connect(state => ({
+    title: state.HtmlHeaderStore.title
+}))
 export default class Home extends React.Component {
-    static propTypes = {
-        dispatch: PropTypes.func.isRequired
-    };
-
     constructor(props, context) {
         super(props, context);
-        this.props.dispatch(HtmlActions.updateTitle('Home'));
+        if (this.props.dispatch){
+
+            // Hell breaks loose. document is not defined? WTF?
+            this.props.dispatch(HtmlActions.updateTitle('Home'));
+        }
     }
 
     render() {
         return (
-            <h2>Home</h2>
+            <div>
+                <h2>Home</h2>
+            </div>
         );
     }
 }

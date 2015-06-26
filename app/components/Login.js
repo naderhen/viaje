@@ -25,7 +25,6 @@ export default class Login extends React.Component {
     }
 
     render() {
-        document.title = this.props.title;
         return (
             <div className="container">
                 <div className="row">

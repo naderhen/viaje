@@ -16,5 +16,11 @@ export default function HtmlHeaderStore(state = initialState, action){
     if (!reduceFn){
         return state;
     }
-    return Object.assign({}, state, reduceFn(state, action));
+
+    const newState = Object.assign({}, state, reduceFn(state, action));
+
+    if (process.env.BROWSER){
+        document.title = newState.title;
+    }
+    return newState;
 }

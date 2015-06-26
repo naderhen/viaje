@@ -1,18 +1,23 @@
 import React from 'react';
 import BrowserHistory from 'react-router/lib/BrowserHistory';
+import { createDispatcher, createRedux, composeStores, bindActionCreators } from 'redux';
+import { thunkMiddleware, loggerMiddleware } from './middleware';
+import * as stores from './stores';
+import routes from './routes';
 import App from './App';
 
-// import stores
-//const mountNode = document.getElementById('app');
+const state = window.appData;
 
-//const state = window.App;
+console.log('app data', state);
 
-//const redux = createRedux(stores, state);
+const dispatcher = createDispatcher(
+    composeStores(stores),
+        getState => [ thunkMiddleware(getState), loggerMiddleware ]
+);
 
-//Router.run(routes, (App) => {
-//    React.render(<App />, document.getElementById('app'));
-//});
+const redux = createRedux(dispatcher, state);
 
 const history = new BrowserHistory();
 
-React.render(<App history={history} />, document.getElementById('app'));
+React.render(<App history={history} routes={routes} redux={redux}/>,
+    document.getElementById('app'));
