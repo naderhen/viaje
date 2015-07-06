@@ -52,6 +52,11 @@ io.on('connection', function(socket){
         
     });
   })
+
+  socket.on('unsubscribe', function(room, cb) {
+    console.log('attempting to leave ' + room)
+    socket.leave(room);
+  })
 });
 
 /* MOVE */
@@ -73,7 +78,7 @@ Event.changes().run().then(function(feed) {
             data_obj['new'] = undefined;
         }
 
-        
+
         io.to(event_feed.room).emit('message', {room: event_feed.room, initial: false, data: data_obj});
     })
 })

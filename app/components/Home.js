@@ -10,8 +10,14 @@ var SubscriptionMixin = {
   subscribe: function(room, cb_obj) {
     var self = this;
     console.log(`subscribing to ${room}`)
+
     socket.emit('subscribe', room, function(success) {
         if (success) {
+            var subscriptions = self.subscriptions || [];
+            subscriptions.push(room);
+
+            self.subscriptions = subscriptions;
+
             socket.on('message', function(msg) {
                 if (msg.room && msg.room == room) {
                     if (msg.initial) {
@@ -49,7 +55,10 @@ var SubscriptionMixin = {
     })
   },
   componentWillUnmount: function() {
-    console.log('WILL UNMOUNT')
+    _.each(this.subscriptions, function(room) {
+        console.log(`unsubscribing from ${room}`)
+        socket.emit('unsubscribe', room);
+    })
   }
 };
 
