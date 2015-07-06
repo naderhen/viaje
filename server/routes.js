@@ -1,5 +1,6 @@
 import debug from 'debug';
-
+import User from './models/User';
+import Event from './models/Event';
 // TODO Alter caching, disable for dev and enable for prod.
 
 export default [

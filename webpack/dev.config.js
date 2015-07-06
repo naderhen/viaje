@@ -48,17 +48,17 @@ export default {
         publicPath: PUBLIC_PATH,
         output: {
             path: path.join(__dirname, '../dist'),
-            filename: '[name]-[chunkhash].js',
-            chunkFilename: '[name]-[chunkhash].js',
+            filename: '[name]-[hash].js',
+            chunkFilename: '[name]-[hash].js',
             publicPath: PUBLIC_PATH
         },
         module: {
             preLoaders: [
-                {
-                    test: /\.js$|.jsx$/,
-                    exclude: /node_modules/,
-                    loader: 'eslint'
-                }
+                // {
+                //     test: /\.js$|.jsx$/,
+                //     exclude: /node_modules/,
+                //     loader: 'eslint'
+                // }
             ],
             loaders: [
                 {
@@ -87,7 +87,7 @@ export default {
         plugins: [
 
             // extract css
-            new ExtractTextPlugin('[name]-[chunkhash].css'),
+            new ExtractTextPlugin('[name]-[hash].css'),
             new webpack.HotModuleReplacementPlugin(),
             new webpack.NoErrorsPlugin(),
             new webpack.DefinePlugin({

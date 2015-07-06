@@ -15,10 +15,24 @@
         <link rel="stylesheet" href="{{this}}">
     {{/each}}
 
+    <script src="/socket.io/socket.io.js"></script>
+
     <title>{{{title}}}</title>
 </head>
 <body>
     <div id="app" class="container">{{{body}}}</div>
+
+    <script>
+      var socket = io();
+
+      // socket.on('message', function(msg) {
+      //   console.log('message', msg);
+      // })
+
+      // socket.on('broadcast', function(msg) {
+      //   console.log('broadcast', msg);
+      // })
+    </script>
 
     <!--<script>-->
         <!--window.appData={{{state}}}-->

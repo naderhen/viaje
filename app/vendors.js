@@ -8,5 +8,6 @@ import skeleton from './../dist/bower_components/skeleton/css/skeleton.css'
 import React from 'react'
 import Redux from 'redux'
 import debug from 'debug'
+import _ from 'lodash'
 
 export default { }

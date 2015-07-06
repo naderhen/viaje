@@ -1,4 +1,6 @@
 import Hapi from 'hapi';
+import socketio from 'socket.io';
+import thinky from 'thinky';
 
 var server = new Hapi.Server();
 server.connection({
@@ -34,3 +36,44 @@ server.connection({
             process.send('online');
         }
 });
+
+var io = socketio(server.listener);
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('subscribe', function(room, cb) {
+    console.log('attempting to join ' + room)
+    socket.join(room, function() {
+        cb(true)
+        console.log("EMITTING")
+        Event.run().then(function(result) {
+            io.emit('message', {room: room, initial: true, data: result})
+        })
+        
+    });
+  })
+});
+
+/* MOVE */
+
+import Event from './models/Event';
+
+var event_feed = {
+    name: 'events',
+    find: Event.changes(),
+    room: "events"
+}
+
+Event.changes().run().then(function(feed) {
+    feed.each(function(err, doc) {
+        var data_obj = {old: doc.getOldValue(), new: doc};
+
+        if (!doc.isSaved()) {
+            data_obj['old'] = doc;
+            data_obj['new'] = undefined;
+        }
+
+        
+        io.to(event_feed.room).emit('message', {room: event_feed.room, initial: false, data: data_obj});
+    })
+})
