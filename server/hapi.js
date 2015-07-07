@@ -1,5 +1,4 @@
 import Hapi from 'hapi';
-import socketio from 'socket.io';
 import thinky from 'thinky';
 import hapiAuthJWT from 'hapi-auth-jwt2';
 import JWT from 'jsonwebtoken';
@@ -56,6 +55,13 @@ server.connection({
       });
     })
 
+    server.register({
+      register: require('hapi-io'),
+      options: {}
+    }, function(err) {
+      console.log(err)
+    });
+
     server.register([{
         register: require('./register'),
         options: {
@@ -81,8 +87,7 @@ server.connection({
 });
 
 
-
-var io = socketio(server.listener);
+var io = server.plugins['hapi-io'].io
 
 io.on('connection', function(socket){
   console.log('a user connected');

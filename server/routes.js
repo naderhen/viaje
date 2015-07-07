@@ -46,15 +46,5 @@ export default [
                 }
             }
         }
-    },
-    {
-        method: "GET",
-        path: "/auth_test",
-        config: {
-            auth: 'jwt',
-            handler: function(req, rep) {
-                console.log('auth test hit')
-            }
-        }
     }
 ];

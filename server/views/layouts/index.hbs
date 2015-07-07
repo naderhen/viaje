@@ -14,16 +14,16 @@
     {{#each assets.style}}
         <link rel="stylesheet" href="{{this}}">
     {{/each}}
-
+    
     <script src="/socket.io/socket.io.js"></script>
 
     <title>{{{title}}}</title>
 </head>
 <body>
-    <div id="app" class="container">{{{body}}}</div>
+    <div id="app">{{{body}}}</div>
 
     <script>
-      var socket = io();
+      var socket = io('', {query: "Authorization=" + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkplbiBKb25lcyIsImlhdCI6MTQzNjI3MTU4OX0.lYL_MqFLEEoKxsjD908GBShFU-YTJ212UR4B3IVENuo"});
 
       // socket.on('message', function(msg) {
       //   console.log('message', msg);

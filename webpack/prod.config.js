@@ -30,11 +30,11 @@ module.exports = {
     },
     module: {
         preLoaders: [
-            {
-                test: /\.js$|.jsx$/,
-                exclude: /node_modules/,
-                loader: 'eslint'
-            }
+            // {
+            //     test: /\.js$|.jsx$/,
+            //     exclude: /node_modules/,
+            //     loader: 'eslint'
+            // }
         ],
         loaders: [
             {
@@ -42,7 +42,7 @@ module.exports = {
                 loader: 'json'
             },
             {
-                test: /\.(woff|eot|ttf)$/,
+                test: /\.(woff|woff2|eot|ttf)$/,
                 loader: 'url?limit=10000&name=[sha512:hash:base64:7].[ext]'
             },
             {

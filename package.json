@@ -29,6 +29,7 @@
     "handlebars": "^3.0.3",
     "hapi": "^8.6.1",
     "hapi-auth-jwt2": "^4.5.0",
+    "hapi-io": "0.0.10",
     "hapi-rethinkdb-thinky": "^0.3.0",
     "immutable": "^3.7.4",
     "jsonwebtoken": "^5.0.2",

@@ -3,6 +3,7 @@ import * as HtmlActions from './../actions/HtmlHeaderActions'
 import * as EventsActions from './../actions/EventsActions'
 import { connect } from 'redux/react'
 import reactMixin from 'react-mixin'
+import moment from 'moment'
 
 var SubscriptionMixin = {
   componentWillMount: function() {
@@ -110,17 +111,71 @@ class Home extends React.Component {
         socket.emit('delete_event', event.id);
     }
 
+    renderEvent(event) {
+        var self = this;
+
+        function convertDate(date) {
+            var date_obj, month, day;
+
+            if (date) {
+                date_obj = moment(date);
+                month = date_obj.format("MMM");
+                day = date_obj.format("DD")
+            } else {
+                day = "N/A";
+                month = ""
+            }
+
+            return {day: day, month: month}
+        }
+        
+        var start_date = convertDate(event.start_date),
+            end_date = convertDate(event.end_date);
+
+        return (
+            <div className="ui internally celled grid stacked segment">
+                <div className="row">
+                    <div className="center aligned two wide column">
+                        <div className="ui tiny statistic">
+                          <div className="label">
+                            {start_date.month}
+                          </div>
+                          <div className="value">
+                            {start_date.day}
+                          </div>
+                        </div>
+                        <div className="ui horizontal divider">
+                            To
+                        </div>
+                        <div className="ui tiny statistic">
+                          <div className="label">
+                            {end_date.month}
+                          </div>
+                          <div className="value">
+                            {end_date.day}
+                          </div>
+                        </div>
+                    </div>
+                    <div className="twelve wide column">
+                      <h3>{event.name}</h3>
+                        <p>{event.description}</p>
+                        <p>Booking Reference #: {event.reference_number}</p>
+                    </div>
+                    <div className="two wide column">
+                      <a onClick={self.deleteEvent.bind(self, event)}>Delete</a>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     render() {
         var self = this;
 
         return (
             <div>
                 <h2>Events</h2>
-                <ul>
-                {self.props.events.map(function(event) {
-                    return <li>{event.name} <a onClick={self.deleteEvent.bind(self, event)}>Delete</a></li>
-                })}
-                </ul>
+                {self.props.events.map(self.renderEvent.bind(self))}
             </div>
         )
     }

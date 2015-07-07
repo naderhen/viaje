@@ -19,16 +19,19 @@ class Application extends React.Component {
     render() {
         const { dispatch } = this.props
         return (
-            <div>
+            <div className="ui container">
                 <Header />
                 <Navigation />
                 {/* dispatch makes it to the component, but fails server-side with 'document is not defined'  */}
                 {/*<Home {...dispatch} /> */}
                 {/* dispatch doesn't make it down server-side (undefined) */}
                 {/* this will render the child routes */}
-                { this.props.children &&
-                    React.cloneElement(this.props.children, { dispatch }) }
-
+                <div className="ui grid">
+                    <div className="column">
+                        { this.props.children &&
+                            React.cloneElement(this.props.children, { dispatch }) }
+                    </div>
+                </div>
             </div>
         )
     }
