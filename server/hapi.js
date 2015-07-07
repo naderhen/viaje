@@ -57,6 +57,16 @@ io.on('connection', function(socket){
     console.log('attempting to leave ' + room)
     socket.leave(room);
   })
+
+  socket.on('delete_event', function(event_id) {
+    console.log(`attempting to delete ${event_id}`)
+
+    Event.get(event_id).run().then(function(event) {
+        event.delete().then(function(result) {
+            console.log('DELETED')
+        });
+    });
+  })
 });
 
 /* MOVE */

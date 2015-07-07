@@ -1,5 +1,6 @@
 import React from 'react'
 import * as HtmlActions from './../actions/HtmlHeaderActions'
+import * as EventsActions from './../actions/EventsActions'
 import { connect } from 'redux/react'
 import reactMixin from 'react-mixin'
 
@@ -65,7 +66,7 @@ var SubscriptionMixin = {
 
 @connect(state => ({
     title: state.HtmlHeaderStore.title,
-    events: []
+    events: state.EventsStore
 }))
 @reactMixin.decorate(SubscriptionMixin)
 class Home extends React.Component {
@@ -79,38 +80,24 @@ class Home extends React.Component {
     }
 
     initEvents(events) {
-        this.setState({events: events});
+        this.props.dispatch(EventsActions.initialEvents(events));
     }
 
     eventAdded(event) {
-        var events = this.state.events;
-
-        events.push(event);
-
-        this.setState({events: events});
+        this.props.dispatch(EventsActions.addEvent(event));
     }
 
     eventUpdated(event) {
-        var events = this.state.events,
-            updated_event = _.findWhere(events, {id: event.id});
-
-        if (updated_event) {
-            _.assign(updated_event, event);
-        }
-
-        this.setState({events: events})
+        this.props.dispatch(EventsActions.updateEvent(event));
     }
 
     eventDeleted(event) {
-        var events = this.state.events;
-
-        _.remove(events, {id: event.id})
-
-        this.setState({events: events});
+        this.props.dispatch(EventsActions.deleteEvent(event));
     }
 
     componentDidMount() {
         var self = this;
+
         self.subscribe('events', {
             initial: self.initEvents,
             added: self.eventAdded,
@@ -119,15 +106,19 @@ class Home extends React.Component {
         });
     }
 
+    deleteEvent(event) {
+        socket.emit('delete_event', event.id);
+    }
+
     render() {
         var self = this;
-        console.log(self.state);
+
         return (
             <div>
-                <h2>Home</h2>
+                <h2>Events</h2>
                 <ul>
-                {self.state && self.state.events.map(function(event) {
-                    return <li>{event.name}</li>
+                {self.props.events.map(function(event) {
+                    return <li>{event.name} <a onClick={self.deleteEvent.bind(self, event)}>Delete</a></li>
                 })}
                 </ul>
             </div>
