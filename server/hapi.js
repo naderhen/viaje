@@ -1,6 +1,7 @@
 import Hapi from 'hapi';
 import socketio from 'socket.io';
 import thinky from 'thinky';
+import hapiAuthJWT from 'hapi-auth-jwt2';
 
 var server = new Hapi.Server();
 server.connection({
@@ -12,6 +13,42 @@ server.connection({
             timeout: 20000 // 20 seconds
         }
     }});
+
+    var secret = 'NeverShareYourSecret';
+
+    var people = { // our "users database"
+        1: {
+          id: 1,
+          name: 'Jen Jones'
+        }
+    };
+    
+    var validate = function (decoded, request, callback) {
+      console.log(" - - - - - - - decoded token:");
+      console.log(decoded);
+      console.log(" - - - - - - - request info:");
+      console.log(request.info);
+      console.log(" - - - - - - - user agent:");
+      console.log(request.headers['user-agent']);
+
+      if (!people[decoded.id]) {
+          return callback(null, false);
+        }
+        else {
+          return callback(null, true);
+        }
+    };
+
+    server.register(hapiAuthJWT, function (err) {
+      if(err){
+        console.log(err);
+      }
+      // see: http://hapijs.com/api#serverauthschemename-scheme
+      server.auth.strategy('jwt', 'jwt', true,
+      { key: secret,  validateFunc: validate,
+        verifyOptions: { ignoreExpiration: true }
+      });
+    })
 
     server.register([{
         register: require('./register'),
@@ -37,25 +74,27 @@ server.connection({
         }
 });
 
+
+
 var io = socketio(server.listener);
 
 io.on('connection', function(socket){
   console.log('a user connected');
-  socket.on('subscribe', function(room, cb) {
-    console.log('attempting to join ' + room)
-    socket.join(room, function() {
+  socket.on('subscribe', function(room_name, cb) {
+    console.log('attempting to join ' + room_name)
+    socket.join(room_name, function() {
         cb(true)
         console.log("EMITTING")
         Event.run().then(function(result) {
-            io.emit('message', {room: room, initial: true, data: result})
+            io.emit('message', {room_name: room_name, initial: true, data: result})
         })
         
     });
   })
 
-  socket.on('unsubscribe', function(room, cb) {
-    console.log('attempting to leave ' + room)
-    socket.leave(room);
+  socket.on('unsubscribe', function(room_name, cb) {
+    console.log('attempting to leave ' + room_name)
+    socket.leave(room_name);
   })
 
   socket.on('delete_event', function(event_id) {
@@ -76,7 +115,7 @@ import Event from './models/Event';
 var event_feed = {
     name: 'events',
     find: Event.changes(),
-    room: "events"
+    room_name: "events" // should be something like events-1234 where 1234 is user-id
 }
 
 Event.changes().run().then(function(feed) {
@@ -89,6 +128,6 @@ Event.changes().run().then(function(feed) {
         }
 
 
-        io.to(event_feed.room).emit('message', {room: event_feed.room, initial: false, data: data_obj});
+        io.to(event_feed.room_name).emit('message', {room_name: event_feed.room_name, initial: false, data: data_obj});
     })
 })

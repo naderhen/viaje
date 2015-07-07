@@ -8,6 +8,7 @@ export default [
         method: '*',
         path: '/assets/{param*}',
         config:{
+            auth: false,
             handler: {
                 directory: {
                     path: __dirname + './../../dist'
@@ -19,6 +20,7 @@ export default [
         method: '*',
         path: '/',
         config: {
+            auth: false,
             handler: function (req, rep){
                 debug('dev')('real server request');
                 const data = {sample:'data'};
@@ -30,6 +32,7 @@ export default [
         method: '*',
         path: '/api/{route*}',
         config:{
+            auth: false,
             handler: {
                 proxy: {
                     passThrough: true,
@@ -41,6 +44,16 @@ export default [
                         cb(null, baseUrl);
                     }
                 }
+            }
+        }
+    },
+    {
+        method: "GET",
+        path: "/auth_test",
+        config: {
+            auth: 'jwt',
+            handler: function(req, rep) {
+                console.log('auth test hit')
             }
         }
     }

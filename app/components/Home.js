@@ -8,19 +8,19 @@ var SubscriptionMixin = {
   componentWillMount: function() {
     console.log('WILL MOUNT')
   },
-  subscribe: function(room, cb_obj) {
+  subscribe: function(room_name, cb_obj) {
     var self = this;
-    console.log(`subscribing to ${room}`)
+    console.log(`subscribing to ${room_name}`)
 
-    socket.emit('subscribe', room, function(success) {
+    socket.emit('subscribe', room_name, function(success) {
         if (success) {
             var subscriptions = self.subscriptions || [];
-            subscriptions.push(room);
+            subscriptions.push(room_name);
 
             self.subscriptions = subscriptions;
 
             socket.on('message', function(msg) {
-                if (msg.room && msg.room == room) {
+                if (msg.room_name && msg.room_name == room_name) {
                     if (msg.initial) {
                         if (cb_obj.initial) {
                             cb_obj.initial.call(self, msg.data);
@@ -56,9 +56,9 @@ var SubscriptionMixin = {
     })
   },
   componentWillUnmount: function() {
-    _.each(this.subscriptions, function(room) {
-        console.log(`unsubscribing from ${room}`)
-        socket.emit('unsubscribe', room);
+    _.each(this.subscriptions, function(room_name) {
+        console.log(`unsubscribing from ${room_name}`)
+        socket.emit('unsubscribe', room_name);
     })
   }
 };
