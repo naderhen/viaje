@@ -2,6 +2,7 @@ import Hapi from 'hapi';
 import socketio from 'socket.io';
 import thinky from 'thinky';
 import hapiAuthJWT from 'hapi-auth-jwt2';
+import JWT from 'jsonwebtoken';
 
 var server = new Hapi.Server();
 server.connection({
@@ -22,6 +23,11 @@ server.connection({
           name: 'Jen Jones'
         }
     };
+
+
+    people[1].token = JWT.sign(people[1], secret);
+
+    console.log(`users token ${people[1].token}`)
     
     var validate = function (decoded, request, callback) {
       console.log(" - - - - - - - decoded token:");
